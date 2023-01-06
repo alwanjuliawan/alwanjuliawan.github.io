@@ -24,15 +24,9 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
+  <!-- Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: iPortfolio - v3.10.0
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -315,7 +309,7 @@
 
         <div class="section-title">
           <h2>Portfolio</h2>
-          <p>Berikut adalah beberapa hasil edit saya menggunakan aplikasi Photoshop, untuk hasil edit video saya menggunakan Adobe After Effects & Premiere Pro anda bisa kunjungi media sosial saya (TikTok & Instagram) yang telah saya tautkan di navigasi bar.</p>
+          <p>Berikut adalah beberapa hasil edit saya menggunakan aplikasi Photoshop, untuk hasil edit video saya menggunakan Adobe After Effects & Premiere Pro anda bisa kunjungi media sosial saya (TikTok & Instagram) yang telah saya tautkan di navigasi bar/menu.</p>
         </div>
 
         <div class="row" data-aos="fade-up">
@@ -538,7 +532,7 @@
           </div>
 
           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form name="wpu-contact-form" class="shadow p-3 mb-5 bg-body rounded">
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="name">Your Name</label>
@@ -557,15 +551,44 @@
                 <label for="name">Message</label>
                 <textarea class="form-control" name="message" rows="10" required></textarea>
               </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
+              <div class="alert alert-success alert-dismissible fade show my-alert d-none" role="alert">
+                <strong>Terimakasih!</strong> Pesan anda telah kami terima.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
+              <div class="my-3">
+                <div class="loading"></div>
+                <div class="error-message"></div>
+                <div class="sent-message"></div>
+              </div>
+              <div class="text-center"><button type="submit" class="btn btn-primary btn-kirim">Send Message</button>
+                <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Loading...
+                </button></div>
             </form>
           </div>
-
+          <script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxyWwuHTITlME9INdnyF-p3rGoy7Jzwx6ie4x0vbNfb-4qORxn2jYAyLr-GKwAaU0Oc/exec'
+            const form = document.forms['wpu-contact-form']
+            const btnKirim = document.querySelector('.btn-kirim')
+            const btnLoading = document.querySelector('.btn-loading')
+            const myAlert = document.querySelector('.my-alert')
+          
+            form.addEventListener('submit', e => {
+              e.preventDefault()
+              btnKirim.classList.toggle('d-none')
+              btnLoading.classList.toggle('d-none')
+              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                  btnLoading.classList.toggle('d-none')
+                  btnKirim.classList.toggle('d-none')
+                  myAlert.classList.toggle('d-none')
+                  form.reset();
+                  console.log('Success!', response)
+                })
+                .catch(error => console.error('Error!', error.message))
+            })
+          </script>
         </div>
 
       </div>
@@ -587,7 +610,7 @@
   <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Template Main JS File -->
+  <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
 </body>
